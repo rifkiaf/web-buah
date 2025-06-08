@@ -16,7 +16,7 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { addToCart } = useCart();
-  const { currentUser } = useAuth();
+  const { currentUser, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,9 +25,9 @@ const Products = () => {
         const productsRef = collection(db, "products");
         const q = query(productsRef);
         const querySnapshot = await getDocs(q);
-        const productsList = querySnapshot.docs.map(doc => ({
+        const productsList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }));
         setProducts(productsList);
         setFilteredProducts(productsList);
@@ -47,7 +47,7 @@ const Products = () => {
       setFilteredProducts(products);
     } else {
       const filtered = products.filter(
-        product => product.category === selectedCategory
+        (product) => product.category === selectedCategory
       );
       setFilteredProducts(filtered);
     }
@@ -128,12 +128,15 @@ const Products = () => {
                 className="h-48 w-full object-cover"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = "https://via.placeholder.com/150?text=Gambar+Tidak+Tersedia";
+                  e.target.src =
+                    "https://via.placeholder.com/150?text=Gambar+Tidak+Tersedia";
                 }}
               />
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
+              <h3 className="text-lg font-semibold text-gray-900">
+                {product.name}
+              </h3>
               <p className="text-sm text-gray-500">{product.category}</p>
               <p className="text-lg font-bold text-green-600 mt-2">
                 Rp {product.price.toLocaleString()}
@@ -170,7 +173,8 @@ const Products = () => {
                   className="h-64 w-full object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = "https://via.placeholder.com/150?text=Gambar+Tidak+Tersedia";
+                    e.target.src =
+                      "https://via.placeholder.com/150?text=Gambar+Tidak+Tersedia";
                   }}
                 />
               </div>
@@ -195,18 +199,20 @@ const Products = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Deskripsi</h4>
-                  <p className="text-gray-600">
-                    {selectedProduct.description}
-                  </p>
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    Deskripsi
+                  </h4>
+                  <p className="text-gray-600">{selectedProduct.description}</p>
                 </div>
 
-                <Button
-                  className="w-full"
-                  onClick={() => handleAddToCart(selectedProduct)}
-                >
-                  Tambah ke Keranjang
-                </Button>
+                {currentUser && !isAdmin && (
+                  <Button
+                    className="w-full"
+                    onClick={() => handleAddToCart(selectedProduct)}
+                  >
+                    Tambah ke Keranjang
+                  </Button>
+                )}
               </div>
             </div>
           </Card>

@@ -129,40 +129,64 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateUserProfile = async (data) => {
-    if (currentUser) {
-      try {
-        await updateProfile(currentUser, data);
-        await setDoc(
-          doc(db, "users", currentUser.uid),
-          {
-            ...data,
-            updatedAt: new Date().toISOString(),
-          },
-          { merge: true }
-        );
-      } catch (error) {
-        console.error("Error updating user profile:", error);
-        throw error;
-      }
-    }
-  };
+  const updateUserProfile = async (updates) => {
+  if (!auth.currentUser) return;
+
+  const user = auth.currentUser;
+
+  // Update ke Firebase Auth (hanya displayName yg bisa diupdate langsung)
+  if (updates.displayName) {
+    await updateProfile(user, { displayName: updates.displayName });
+  }
+
+  // Update ke Firestore
+  const userDocRef = doc(db, "users", user.uid);
+  await setDoc(userDocRef, updates, { merge: true });
+
+  // Refresh currentUser dengan data terbaru
+  const userDocSnap = await getDoc(userDocRef);
+  if (userDocSnap.exists()) {
+    const newUserData = userDocSnap.data();
+    setCurrentUser({
+      ...user,
+      ...newUserData,
+      metadata: user.metadata,
+    });
+  }
+};
+
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("Auth state changed. User:", user?.uid);
-      setCurrentUser(user);
-      if (user) {
-        const isUserAdmin = await checkAdminRole(user);
-        console.log("Auth state changed - Is user admin:", isUserAdmin);
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        // Gabungkan user Firebase Auth dengan data tambahan dari Firestore
+        const mergedUser = {
+          ...user,
+          ...userData,
+          metadata: user.metadata, // tetap bawa metadata
+        };
+
+        setCurrentUser(mergedUser);
+        setIsAdmin(userData.role === "admin");
       } else {
+        setCurrentUser(user); // fallback jika tidak ada dokumen
         setIsAdmin(false);
       }
-      setLoading(false);
-    });
+    } else {
+      setCurrentUser(null);
+      setIsAdmin(false);
+    }
+    setLoading(false);
+  });
 
-    return unsubscribe;
-  }, []);
+  return unsubscribe;
+}, []);
+
 
   const value = {
     currentUser,

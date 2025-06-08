@@ -13,6 +13,7 @@ export default function Profile() {
     email: currentUser?.email || "",
     phone: currentUser?.phone || "",
     address: currentUser?.address || "",
+    role: currentUser?.role || "",
   });
 
   const handleChange = (e) => {
@@ -33,6 +34,7 @@ export default function Profile() {
         displayName: formData.displayName,
         phone: formData.phone,
         address: formData.address,
+        role: formData.role,
       });
       setSuccess("Profile updated successfully!");
     } catch (error) {
@@ -54,7 +56,9 @@ export default function Profile() {
   return (
     <div className="container mx-auto px-4 py-8 pt-24">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Pengaturan Profil</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          Pengaturan Profil
+        </h1>
 
         {error && (
           <div className="mb-4 p-4 text-sm text-red-700 bg-red-100 rounded-lg">
@@ -108,7 +112,10 @@ export default function Profile() {
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nomor Telepon
               </label>
               <input
@@ -122,7 +129,10 @@ export default function Profile() {
             </div>
 
             <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="address"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Alamat
               </label>
               <input
@@ -133,6 +143,26 @@ export default function Profile() {
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
               />
+            </div>
+
+            <div>
+              <label
+                htmlFor="role"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Peran
+              </label>
+              <input
+                type="text"
+                id="role"
+                name="role"
+                value={formData.role}
+                disabled
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50"
+              />
+              <p className="mt-1 text-sm text-gray-500">
+                Peran tidak dapat diubah
+              </p>
             </div>
 
             <div className="flex items-center justify-between">
@@ -179,6 +209,10 @@ export default function Profile() {
                     ).toLocaleDateString()
                   : "N/A"}
               </p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Peran</p>
+              <p className="text-gray-900">{currentUser?.role || "N/A"}</p>
             </div>
           </div>
         </div>
