@@ -5,17 +5,17 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-b from-green-800 to-green-900 text-white">
       <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 text-center">
           {/* Company Info */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
+          <div className="space-y-4 flex flex-col items-center">
+            <div className="flex items-center space-x-2 justify-center">
               <span className="text-2xl">🍎</span>
-              <h3 className="text-xl font-bold">Fruit Shop</h3>
+              <h3 className="text-xl font-bold">Sari Buah</h3>
             </div>
-            <p className="text-green-200 leading-relaxed">
+            <p className="text-green-200 leading-relaxed max-w-xs mx-auto">
               Menyediakan buah segar berkualitas untuk keluarga Anda. Kami berkomitmen memberikan produk terbaik dengan harga terjangkau.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 justify-center">
               <a href="#" className="text-green-200 hover:text-white transition-colors">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
@@ -35,83 +35,76 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+          <div className="flex flex-col items-center">
+            <h3 className="text-lg font-semibold mb-4">Tautan Cepat</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/" className="text-green-200 hover:text-white transition-colors flex items-center space-x-2">
+                <Link to="/" className="text-green-200 hover:text-white transition-colors flex items-center space-x-2 justify-center">
                   <span>→</span>
-                  <span>Home</span>
+                  <span>Beranda</span>
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="text-green-200 hover:text-white transition-colors flex items-center space-x-2">
+                <Link to="/products" className="text-green-200 hover:text-white transition-colors flex items-center space-x-2 justify-center">
                   <span>→</span>
-                  <span>Products</span>
+                  <span>Produk</span>
                 </Link>
               </li>
               <li>
-                <Link to="/login" className="text-green-200 hover:text-white transition-colors flex items-center space-x-2">
+                <Link to="/login" className="text-green-200 hover:text-white transition-colors flex items-center space-x-2 justify-center">
                   <span>→</span>
-                  <span>Login</span>
+                  <span>Masuk</span>
                 </Link>
               </li>
             </ul>
           </div>
 
           {/* Contact Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+          <div className="flex flex-col items-center">
+            <h3 className="text-lg font-semibold mb-4">Kontak Kami</h3>
             <ul className="space-y-3">
-              <li className="flex items-start space-x-3">
+              <li className="flex items-center space-x-3 justify-center">
                 <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
-                <span className="text-green-200">info@fruitshop.com</span>
+                <span className="text-green-200">saribuah@gmail.com</span>
               </li>
-              <li className="flex items-start space-x-3">
+              <li className="flex items-center space-x-3 justify-center">
                 <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                 </svg>
-                <span className="text-green-200">(123) 456-7890</span>
+                <span className="text-green-200">(62) 815-1704-7046</span>
               </li>
-              <li className="flex items-start space-x-3">
+              <li className="flex items-center space-x-3 justify-center">
                 <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
-                <span className="text-green-200">Jl. Buah Segar No. 123, Jakarta</span>
+                <span className="text-green-200">Jl. Raya Cifor, Bogor</span>
               </li>
             </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
-            <p className="text-green-200 mb-4">Subscribe untuk mendapatkan info terbaru dan promo menarik</p>
-            <form className="space-y-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 rounded-lg bg-green-700/50 border border-green-600 text-white placeholder-green-300 focus:outline-none focus:border-green-400"
-              />
-              <button
-                type="submit"
-                className="w-full px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-400 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
           </div>
         </div>
 
         <div className="border-t border-green-700/50 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-green-200">&copy; 2024 Fruit Shop. All rights reserved.</p>
-            <div className="flex space-x-6">
-              <a href="#" className="text-green-200 hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="text-green-200 hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="text-green-200 hover:text-white transition-colors">Cookie Policy</a>
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center items-center gap-4">
+            <p className="text-green-200 flex items-center space-x-2 order-2 md:order-1 text-center md:text-left">
+              <span className="text-xl">🍏</span>
+              <span>&copy; 2025 Sari Buah. All rights reserved.</span>
+            </p>
+            <div className="flex space-x-6 order-1 md:order-2">
+              <a href="#" className="text-green-200 hover:text-white transition-colors flex items-center space-x-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"/></svg>
+                <span>Privacy Policy</span>
+              </a>
+              <a href="#" className="text-green-200 hover:text-white transition-colors flex items-center space-x-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5"/></svg>
+                <span>Terms of Service</span>
+              </a>
+              <a href="#" className="text-green-200 hover:text-white transition-colors flex items-center space-x-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.4 15a1.65 1.65 0 01.33 1.82A8 8 0 114 8.6a1.65 1.65 0 011.82.33"/></svg>
+                <span>Cookie Policy</span>
+              </a>
             </div>
           </div>
         </div>

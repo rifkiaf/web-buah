@@ -23,8 +23,25 @@
     border border-primary-500 hover:bg-primary-50 transition-all duration-200;
   }
 
+  .btn-fruit-green {
+    @apply bg-fruitgreen text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-all duration-200;
+  }
+  .btn-fruit-yellow {
+    @apply bg-fruityellow text-black px-6 py-3 rounded-lg font-medium hover:bg-yellow-400 transition-all duration-200;
+  }
+  .btn-fruit-red {
+    @apply bg-fruitred text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-all duration-200;
+  }
+  .btn-fruit-orange {
+    @apply bg-fruitorange text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-700 transition-all duration-200;
+  }
+
   .card {
     @apply bg-white rounded-xl shadow-lg overflow-hidden;
+  }
+
+  .card-fruit {
+    @apply bg-fruitwhite border border-fruitgreen rounded-xl shadow-lg overflow-hidden;
   }
 
   .card-hover {

@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (email, password, displayName, isAdmin = false) => {
+  const signup = async (email, password, displayName, isAdmin = false, phone = '', address = '') => {
     try {
       console.log("Starting signup process...");
       console.log("Firestore instance:", db);
@@ -70,6 +70,8 @@ export const AuthProvider = ({ children }) => {
         displayName: displayName,
         role: isAdmin ? "admin" : "user",
         createdAt: new Date().toISOString(),
+        phone: phone,
+        address: address,
       };
       console.log("Creating user document with data:", userData);
       
@@ -177,4 +179,4 @@ export const AuthProvider = ({ children }) => {
       {!loading && children}
     </AuthContext.Provider>
   );
-}; 
+};

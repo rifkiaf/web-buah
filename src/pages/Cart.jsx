@@ -13,20 +13,24 @@ export default function Cart() {
     );
   }
 
+  const handleCheckout = () => {
+    alert("Fitur pembayaran belum tersedia.");
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-8">Keranjang Belanja</h1>
 
       {cartItems.length === 0 ? (
         <div className="text-center py-12">
           <h2 className="text-2xl font-semibold text-gray-600 mb-4">
-            Your cart is empty
+            Keranjang Anda kosong
           </h2>
           <Link
             to="/products"
             className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"
           >
-            Continue Shopping
+            Lanjutkan Berbelanja
           </Link>
         </div>
       ) : (
@@ -74,7 +78,7 @@ export default function Cart() {
                       onClick={() => removeFromCart(item.id)}
                       className="mt-2 text-red-600 hover:text-red-800"
                     >
-                      Remove
+                      Hapus
                     </button>
                   </div>
                 </div>
@@ -85,7 +89,7 @@ export default function Cart() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Order Summary
+                Ringkasan Pesanan
               </h2>
               <div className="space-y-4">
                 <div className="flex justify-between">
@@ -95,8 +99,8 @@ export default function Cart() {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
-                  <span className="text-gray-900">Free</span>
+                  <span className="text-gray-600">Pengiriman</span>
+                  <span className="text-gray-900">Gratis</span>
                 </div>
                 <div className="border-t pt-4">
                   <div className="flex justify-between">
@@ -110,12 +114,9 @@ export default function Cart() {
                 </div>
                 <button 
                   className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors"
-                  onClick={() => {
-                    // TODO: Implement checkout functionality
-                    alert("Checkout functionality coming soon!");
-                  }}
+                  onClick={handleCheckout}
                 >
-                  Checkout
+                  Bayar
                 </button>
               </div>
             </div>
@@ -124,4 +125,4 @@ export default function Cart() {
       )}
     </div>
   );
-} 
+}

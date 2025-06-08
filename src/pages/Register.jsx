@@ -8,6 +8,8 @@ export default function Register() {
     email: "",
     password: "",
     confirmPassword: "",
+    phone: "",
+    address: "",
     isAdmin: false,
   });
   const [error, setError] = useState("");
@@ -17,25 +19,28 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (formData.password !== formData.confirmPassword) {
       return setError("Passwords do not match");
     }
-
+    if (!formData.phone.trim()) {
+      return setError("Phone number is required");
+    }
+    if (!formData.address.trim()) {
+      return setError("Address is required");
+    }
     try {
       setError("");
       setLoading(true);
-      console.log("Starting registration with data:", {
-        email: formData.email,
-        name: formData.name,
-        isAdmin: formData.isAdmin
-      });
-      
-      await signup(formData.email, formData.password, formData.name, formData.isAdmin);
-      console.log("Registration successful");
+      await signup(
+        formData.email,
+        formData.password,
+        formData.name,
+        formData.isAdmin,
+        formData.phone,
+        formData.address
+      );
       navigate("/");
     } catch (error) {
-      console.error("Registration error:", error);
       setError("Failed to create an account. " + error.message);
     } finally {
       setLoading(false);
@@ -154,6 +159,35 @@ export default function Register() {
                   autoComplete="new-password"
                   required
                   value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+              <div className="mt-1">
+                <input
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  required
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
+              <div className="mt-1">
+                <input
+                  id="address"
+                  name="address"
+                  type="text"
+                  required
+                  value={formData.address}
                   onChange={handleChange}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
                 />

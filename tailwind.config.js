@@ -8,17 +8,27 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d',
-        }
+          50: '#f4f9f4',
+          100: '#e3f6e3',
+          200: '#c2e9c2',
+          300: '#8fd88f',
+          400: '#4eb84e',
+          500: '#16610E', // Hijau Tua utama
+          600: '#13510c',
+          700: '#10410a',
+          800: '#0d3108',
+          900: '#092106',
+        },
+        accent: {
+          orange: '#F97A00', // Oranye utama
+          yellow: '#FED16A', // Kuning tua
+          lightyellow: '#FFF4A4', // Kuning muda
+        },
+        // Warna pendukung harmonis
+        greenlight: '#8fd88f', // Hijau muda
+        orangelight: '#FFB366', // Oranye muda
+        graysoft: '#F5F5F5', // Abu-abu netral
+        dark: '#222', // Untuk teks gelap
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

@@ -11,6 +11,8 @@ export default function Profile() {
   const [formData, setFormData] = useState({
     displayName: currentUser?.displayName || "",
     email: currentUser?.email || "",
+    phone: currentUser?.phone || "",
+    address: currentUser?.address || "",
   });
 
   const handleChange = (e) => {
@@ -29,6 +31,8 @@ export default function Profile() {
     try {
       await updateUserProfile({
         displayName: formData.displayName,
+        phone: formData.phone,
+        address: formData.address,
       });
       setSuccess("Profile updated successfully!");
     } catch (error) {
@@ -50,7 +54,7 @@ export default function Profile() {
   return (
     <div className="container mx-auto px-4 py-8 pt-24">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Profile Settings</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">Pengaturan Profil</h1>
 
         {error && (
           <div className="mb-4 p-4 text-sm text-red-700 bg-red-100 rounded-lg">
@@ -71,7 +75,7 @@ export default function Profile() {
                 htmlFor="displayName"
                 className="block text-sm font-medium text-gray-700"
               >
-                Full Name
+                Nama Lengkap
               </label>
               <input
                 type="text"
@@ -99,8 +103,36 @@ export default function Profile() {
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50"
               />
               <p className="mt-1 text-sm text-gray-500">
-                Email cannot be changed
+                Email tidak dapat diubah
               </p>
+            </div>
+
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                Nomor Telepon
+              </label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                Alamat
+              </label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+              />
             </div>
 
             <div className="flex items-center justify-between">
@@ -109,7 +141,7 @@ export default function Profile() {
                 disabled={loading}
                 className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? "Saving..." : "Save Changes"}
+                {loading ? "Menyimpan..." : "Simpan Perubahan"}
               </button>
 
               <button
@@ -117,7 +149,7 @@ export default function Profile() {
                 onClick={handleLogout}
                 className="text-red-600 hover:text-red-800"
               >
-                Log Out
+                Keluar
               </button>
             </div>
           </form>
@@ -125,11 +157,11 @@ export default function Profile() {
 
         <div className="mt-8 bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Account Information
+            Informasi Akun
           </h2>
           <div className="space-y-4">
             <div>
-              <p className="text-sm text-gray-500">Account Created</p>
+              <p className="text-sm text-gray-500">Akun Dibuat</p>
               <p className="text-gray-900">
                 {currentUser?.metadata?.creationTime
                   ? new Date(
@@ -139,7 +171,7 @@ export default function Profile() {
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">Last Sign In</p>
+              <p className="text-sm text-gray-500">Masuk Terakhir</p>
               <p className="text-gray-900">
                 {currentUser?.metadata?.lastSignInTime
                   ? new Date(
@@ -153,4 +185,4 @@ export default function Profile() {
       </div>
     </div>
   );
-} 
+}
