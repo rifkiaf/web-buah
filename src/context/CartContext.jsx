@@ -92,8 +92,16 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  const clearCart = () => {
+  const clearCart = async () => {
     setCartItems([]);
+    if (!currentUser) return;
+
+    try {
+      const cartRef = doc(db, "carts", currentUser.uid);
+      await setDoc(cartRef, { items: [] }); // kosongkan di Firestore juga
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+    }
   };
 
   const getCartTotal = () => {

@@ -14,6 +14,7 @@ import Register from "../pages/Register";
 import Cart from "../pages/Cart";
 import Profile from "../pages/Profile";
 import DashboardAdmin from "../pages/DashboardAdmin";
+import Success from "../pages/Success";
 
 // Route Components
 const ProtectedRoute = ({ children }) => {
@@ -108,6 +109,14 @@ const routes = [
       <AdminRoute>
         <DashboardAdmin />
       </AdminRoute>
+    ),
+  },
+  {
+    path: "/success",
+    element: (
+      <ProtectedRoute>
+        <Success />
+      </ProtectedRoute>
     ),
   },
 ];

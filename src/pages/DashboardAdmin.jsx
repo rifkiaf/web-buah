@@ -14,9 +14,14 @@ const DashboardAdmin = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // Tambahan untuk transaksi
+  const [transactions, setTransactions] = useState([]);
+  const [loadingTransactions, setLoadingTransactions] = useState(true);
+
   useEffect(() => {
-    console.log("DashboardAdmin mounted, fetching products...");
+    console.log("DashboardAdmin mounted, fetching products and transactions...");
     fetchProducts();
+    fetchTransactions(); // Memanggil data transaksi
   }, []);
 
   const fetchProducts = async () => {
@@ -40,6 +45,26 @@ const DashboardAdmin = () => {
       setError("Gagal mengambil data produk: " + error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Fungsi mengambil transaksi
+  const fetchTransactions = async () => {
+    try {
+      console.log("Fetching transactions from Firestore...");
+      const transactionsRef = collection(db, "transactions");
+      const querySnapshot = await getDocs(transactionsRef);
+      console.log("Transactions snapshot:", querySnapshot.size, "documents");
+      const transactionsList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setTransactions(transactionsList);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+      setError("Gagal mengambil data transaksi: " + error.message);
+    } finally {
+      setLoadingTransactions(false);
     }
   };
 
@@ -178,6 +203,70 @@ const DashboardAdmin = () => {
           </table>
         </div>
       </Card>
+
+            <h2 className="text-2xl font-semibold mt-10 mb-4">Daftar Transaksi</h2>
+      <Card>
+        <div className="overflow-x-auto">
+          {loadingTransactions ? (
+            <div className="p-4 text-center text-gray-500">Memuat transaksi...</div>
+          ) : (
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Order ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    User ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Produk
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Total
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tanggal
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {transactions.map((transaksi) => (
+                  <tr key={transaksi.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaksi.id}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaksi.userId}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaksi.cartItems &&
+                        transaksi.cartItems.map((item) => (
+                          <div key={item.id}>
+                            {item.name} x{item.quantity}
+                          </div>
+                        ))}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {formatCurrency(transaksi.total)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaksi.status}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {new Date(transaksi.createdAt).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </Card>
+
 
       {showForm && (
         <ProductForm
