@@ -23,7 +23,7 @@ export default function Cart() {
     );
   }
 
-  const API_BASE_URL = "https://backend-buah.vercel.app";
+  // const API_BASE_URL = "https://backend-buah.vercel.app";
 
   const handleCheckout = async () => {
     try {
@@ -48,14 +48,17 @@ export default function Cart() {
           console.log("Success:", result);
 
           // Contoh panggil API update status pembayaran
-          await fetch("http://localhost:5000/api/update-transaction-status", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              orderId: data.orderId, // pastikan kamu simpan orderId dari response create-transaction
-              status: "paid",
-            }),
-          });
+          await fetch(
+            "http://localhost:5000/api/create-transaction",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                orderId: data.orderId,
+                status: "paid",
+              }),
+            }
+          );
 
           await clearCart();
           window.location.href = "/success";
