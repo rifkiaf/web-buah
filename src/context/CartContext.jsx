@@ -12,18 +12,23 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [displayName, setDisplayName] = useState(null);
   const { currentUser } = useAuth();
 
-  // Load cart items from Firestore when user logs in
+  // Load cart items and displayName from Firestore when user logs in
   useEffect(() => {
     const loadCartItems = async () => {
       if (!currentUser) {
         setCartItems([]);
+        setDisplayName(null);
         setLoading(false);
         return;
       }
 
       try {
+        // Set displayName from currentUser
+        setDisplayName(currentUser.displayName || "Anonymous");
+
         const cartRef = doc(db, "carts", currentUser.uid);
         const cartDoc = await getDoc(cartRef);
 
@@ -118,6 +123,7 @@ export const CartProvider = ({ children }) => {
   const value = {
     cartItems,
     loading,
+    displayName,
     addToCart,
     removeFromCart,
     updateQuantity,

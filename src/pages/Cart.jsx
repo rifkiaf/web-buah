@@ -11,6 +11,7 @@ export default function Cart() {
     getCartTotal,
     clearCart,
     loading,
+    displayName,
   } = useCart();
 
   const { currentUser } = useAuth();
@@ -23,8 +24,6 @@ export default function Cart() {
     );
   }
 
-  // const API_BASE_URL = "https://backend-buah.vercel.app";
-
   const handleCheckout = async () => {
     try {
       const response = await fetch(
@@ -36,6 +35,7 @@ export default function Cart() {
             userId: currentUser.uid,
             cartItems,
             total: getCartTotal(),
+            displayName, // Include displayName in the request
           }),
         }
       );

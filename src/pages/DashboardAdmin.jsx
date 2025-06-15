@@ -204,7 +204,7 @@ const DashboardAdmin = () => {
         </div>
       </Card>
 
-            <h2 className="text-2xl font-semibold mt-10 mb-4">Daftar Transaksi</h2>
+      <h2 className="text-2xl font-semibold mt-10 mb-4">Daftar Transaksi</h2>
       <Card>
         <div className="overflow-x-auto">
           {loadingTransactions ? (
@@ -215,6 +215,9 @@ const DashboardAdmin = () => {
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Order ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nama Pengguna
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     User ID
@@ -238,6 +241,9 @@ const DashboardAdmin = () => {
                   <tr key={transaksi.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {transaksi.id}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaksi.displayName || "Anonymous"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {transaksi.userId}
@@ -266,7 +272,6 @@ const DashboardAdmin = () => {
           )}
         </div>
       </Card>
-
 
       {showForm && (
         <ProductForm
