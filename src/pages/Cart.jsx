@@ -28,7 +28,7 @@ export default function Cart() {
   const handleCheckout = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/create-transaction",
+        "https://backend-buah.vercel.app/api/create-transaction",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -48,17 +48,14 @@ export default function Cart() {
           console.log("Success:", result);
 
           // Contoh panggil API update status pembayaran
-          await fetch(
-            "http://localhost:5000/api/create-transaction",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                orderId: data.orderId,
-                status: "paid",
-              }),
-            }
-          );
+          await fetch("https://backend-buah.vercel.app/api/update-transaction-status", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              orderId: data.orderId,
+              status: "paid",
+            }),
+          });
 
           await clearCart();
           window.location.href = "/success";
