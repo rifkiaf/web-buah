@@ -19,7 +19,9 @@ const DashboardAdmin = () => {
   const [loadingTransactions, setLoadingTransactions] = useState(true);
 
   useEffect(() => {
-    console.log("DashboardAdmin mounted, fetching products and transactions...");
+    console.log(
+      "DashboardAdmin mounted, fetching products and transactions..."
+    );
     fetchProducts();
     fetchTransactions(); // Memanggil data transaksi
   }, []);
@@ -29,16 +31,16 @@ const DashboardAdmin = () => {
       console.log("Fetching products from Firestore...");
       const productsRef = collection(db, "products");
       console.log("Products collection reference:", productsRef);
-      
+
       const querySnapshot = await getDocs(productsRef);
       console.log("Query snapshot received:", querySnapshot.size, "documents");
-      
+
       const productsList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       console.log("Products list:", productsList);
-      
+
       setProducts(productsList);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -75,7 +77,7 @@ const DashboardAdmin = () => {
         const productRef = doc(db, "products", productId);
         await deleteDoc(productRef);
         console.log("Product deleted successfully");
-        
+
         setProducts(products.filter((product) => product.id !== productId));
       } catch (error) {
         console.error("Error deleting product:", error);
@@ -170,7 +172,9 @@ const DashboardAdmin = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">{product.category}</div>
+                    <div className="text-sm text-gray-500">
+                      {product.category}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">
@@ -208,7 +212,9 @@ const DashboardAdmin = () => {
       <Card>
         <div className="overflow-x-auto">
           {loadingTransactions ? (
-            <div className="p-4 text-center text-gray-500">Memuat transaksi...</div>
+            <div className="p-4 text-center text-gray-500">
+              Memuat transaksi...
+            </div>
           ) : (
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -220,7 +226,13 @@ const DashboardAdmin = () => {
                     Nama Pengguna
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Email
+                  </th>
+                  {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     User ID
+                  </th> */}
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Alamat
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Produk
@@ -246,7 +258,16 @@ const DashboardAdmin = () => {
                       {transaksi.displayName || "Anonymous"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaksi.email || "Tidak ada email"}
+                    </td>
+                    {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {transaksi.userId}
+                    </td> */}
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaksi.address || "Tidak ada alamat"}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaksi.phone || "Tidak ada nomor telepon"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {transaksi.cartItems &&

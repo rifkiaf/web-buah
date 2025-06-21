@@ -33,6 +33,9 @@ export default function Cart() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userId: currentUser.uid,
+            email: currentUser.email, 
+            address: currentUser.address,
+            phone: currentUser.phone,
             cartItems,
             total: getCartTotal(),
             displayName, // Include displayName in the request
