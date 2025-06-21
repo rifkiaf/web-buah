@@ -57,10 +57,14 @@ const DashboardAdmin = () => {
       const transactionsRef = collection(db, "transactions");
       const querySnapshot = await getDocs(transactionsRef);
       console.log("Transactions snapshot:", querySnapshot.size, "documents");
-      const transactionsList = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+
+      const transactionsList = querySnapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // 🔥 Sorting by ISO date
+
       setTransactions(transactionsList);
     } catch (error) {
       console.error("Error fetching transactions:", error);
@@ -228,11 +232,11 @@ const DashboardAdmin = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Email
                   </th>
-                  {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    User ID
-                  </th> */}
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Alamat
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nomor Telepon
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Produk
@@ -260,9 +264,6 @@ const DashboardAdmin = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {transaksi.email || "Tidak ada email"}
                     </td>
-                    {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {transaksi.userId}
-                    </td> */}
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {transaksi.address || "Tidak ada alamat"}
                     </td>

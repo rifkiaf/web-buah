@@ -16,6 +16,7 @@ const ProductForm = ({ product, onClose, onSubmit }) => {
     image: "",
   });
   const [loading, setLoading] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
   const [error, setError] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -39,15 +40,8 @@ const ProductForm = ({ product, onClose, onSubmit }) => {
     if (!formData.price || formData.price <= 0) errors.price = "Harga harus lebih dari 0";
     if (!formData.stock || formData.stock < 0) errors.stock = "Stok tidak boleh negatif";
     if (!formData.description.trim()) errors.description = "Deskripsi harus diisi";
-    if (!formData.image.trim()) errors.image = "URL gambar harus diisi";
+    if (!formData.image) errors.image = "Gambar produk harus diunggah";
     
-    // Validasi URL gambar
-    try {
-      new URL(formData.image);
-    } catch (e) {
-      errors.image = "URL gambar tidak valid";
-    }
-
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -63,6 +57,52 @@ const ProductForm = ({ product, onClose, onSubmit }) => {
         ...prev,
         [name]: "",
       }));
+    }
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImageUploading(true);
+    setError("");
+
+    const cloudinaryFormData = new FormData();
+    cloudinaryFormData.append("file", file);
+    cloudinaryFormData.append("upload_preset", "buah_upload");
+
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dtaeoc9tu/image/upload",
+        {
+          method: "POST",
+          body: cloudinaryFormData,
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error.message || "Gagal mengunggah gambar");
+      }
+
+      const data = await response.json();
+      setFormData((prev) => ({
+        ...prev,
+        image: data.secure_url,
+      }));
+
+      if (validationErrors.image) {
+        setValidationErrors((prev) => ({ ...prev, image: "" }));
+      }
+    } catch (err) {
+      console.error("Error uploading image:", err);
+      setError(err.message || "Gagal mengunggah gambar.");
+      setValidationErrors((prev) => ({
+        ...prev,
+        image: "Gagal mengunggah gambar.",
+      }));
+    } finally {
+      setImageUploading(false);
     }
   };
 
@@ -196,34 +236,41 @@ const ProductForm = ({ product, onClose, onSubmit }) => {
               onChange={handleChange}
               rows="4"
               className={`w-full px-4 py-2 rounded-md border ${
-                validationErrors.description ? "border-red-500" : "border-gray-300"
+                validationErrors.description
+                  ? "border-red-500"
+                  : "border-gray-300"
               } focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
               required
             />
             {validationErrors.description && (
-              <p className="mt-1 text-sm text-red-500">{validationErrors.description}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {validationErrors.description}
+              </p>
             )}
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              URL Gambar Produk
+              Gambar Produk
             </label>
             <input
-              type="url"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              placeholder="https://example.com/image.jpg"
-              className={`w-full px-4 py-2 rounded-md border ${
-                validationErrors.image ? "border-red-500" : "border-gray-300"
-              } focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
-              required
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:bg-green-600 file:text-white file:border-none file:px-4 file:py-2 file:mr-4"
+              disabled={imageUploading}
             />
-            {validationErrors.image && (
-              <p className="mt-1 text-sm text-red-500">{validationErrors.image}</p>
+            {imageUploading && (
+              <p className="mt-1 text-sm text-gray-500">
+                Mengunggah gambar...
+              </p>
             )}
-            {formData.image && (
+            {validationErrors.image && (
+              <p className="mt-1 text-sm text-red-500">
+                {validationErrors.image}
+              </p>
+            )}
+            {formData.image && !imageUploading && (
               <div className="mt-2">
                 <img
                   src={formData.image}
@@ -231,7 +278,8 @@ const ProductForm = ({ product, onClose, onSubmit }) => {
                   className="h-32 w-32 object-cover rounded"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = "https://via.placeholder.com/150?text=Gambar+Tidak+Tersedia";
+                    e.target.src =
+                      "https://via.placeholder.com/150?text=Gambar+Tidak+Tersedia";
                   }}
                 />
               </div>
@@ -243,12 +291,16 @@ const ProductForm = ({ product, onClose, onSubmit }) => {
               type="button"
               variant="secondary"
               onClick={onClose}
-              disabled={loading}
+              disabled={loading || imageUploading}
             >
               Batal
             </Button>
-            <Button type="submit" disabled={loading}>
-              {loading ? "Menyimpan..." : product ? "Update Produk" : "Tambah Produk"}
+            <Button type="submit" disabled={loading || imageUploading}>
+              {loading
+                ? "Menyimpan..."
+                : product
+                ? "Update Produk"
+                : "Tambah Produk"}
             </Button>
           </div>
         </form>
