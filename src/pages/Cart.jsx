@@ -65,7 +65,7 @@ export default function Cart() {
           console.log("Success:", result);
 
           // Contoh panggil API update status pembayaran
-          await fetch("http://backend-buah.vercel.app/api/update-transaction-status", {
+          await fetch("https://backend-buah.vercel.app/api/update-transaction-status", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
