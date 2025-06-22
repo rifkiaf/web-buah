@@ -15,6 +15,7 @@ import Cart from "../pages/Cart";
 import Profile from "../pages/Profile";
 import DashboardAdmin from "../pages/DashboardAdmin";
 import Success from "../pages/Success";
+import MyOrders from "../pages/MyOrders";
 
 // Route Components
 const ProtectedRoute = ({ children }) => {
@@ -116,6 +117,14 @@ const routes = [
     element: (
       <ProtectedRoute>
         <Success />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/my-orders",
+    element: (
+      <ProtectedRoute>
+        <MyOrders />
       </ProtectedRoute>
     ),
   },

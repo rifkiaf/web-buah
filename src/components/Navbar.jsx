@@ -97,7 +97,7 @@ export default function Navbar() {
             )}
             {currentUser ? (
               <>
-                {isAdmin && (
+                {isAdmin ? (
                   <Link
                     to="/admin"
                     className={`px-4 py-2 rounded-md font-medium transition-colors ${
@@ -107,6 +107,17 @@ export default function Navbar() {
                     } ${isActiveLink("/admin")}`}
                   >
                     Admin Dasbor
+                  </Link>
+                ) : (
+                  <Link
+                    to="/my-orders"
+                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                      isScrolled
+                        ? "text-gray-700 hover:bg-gray-100"
+                        : "text-white hover:bg-white/20"
+                    } ${isActiveLink("/my-orders")}`}
+                  >
+                    Pesanan Saya
                   </Link>
                 )}
                 <Link
@@ -219,7 +230,7 @@ export default function Navbar() {
             )}
             {currentUser ? (
               <>
-                {isAdmin && (
+                {isAdmin ? (
                   <Link
                     to="/admin"
                     className={`block px-3 py-2 rounded-md font-medium transition-colors ${
@@ -229,6 +240,17 @@ export default function Navbar() {
                     } ${isActiveLink("/admin")}`}
                   >
                     Admin Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    to="/my-orders"
+                    className={`block px-3 py-2 rounded-md font-medium transition-colors ${
+                      isScrolled
+                        ? "text-gray-700 hover:bg-gray-100"
+                        : "text-gray-700 hover:bg-gray-100"
+                    } ${isActiveLink("/my-orders")}`}
+                  >
+                    Pesanan Saya
                   </Link>
                 )}
                 <Link

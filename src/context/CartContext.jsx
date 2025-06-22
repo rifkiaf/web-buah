@@ -15,6 +15,14 @@ export const CartProvider = ({ children }) => {
   const [displayName, setDisplayName] = useState(null);
   const { currentUser } = useAuth();
 
+  const shippingOptions = {
+    cod: { name: "Kurir Toko / COD (Area Lokal, 1-2 jam)", cost: 8000 },
+    instant: { name: "Pengiriman Instant / Same Day (1-2 jam)", cost: 20000 },
+    pickup: { name: "Ambil di Toko", cost: 0 },
+  };
+
+  const [shippingOption, setShippingOption] = useState("cod");
+
   // Load cart items and displayName from Firestore when user logs in
   useEffect(() => {
     const loadCartItems = async () => {
@@ -130,6 +138,9 @@ export const CartProvider = ({ children }) => {
     clearCart,
     getCartTotal,
     getCartItemCount,
+    shippingOptions,
+    shippingOption,
+    setShippingOption,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

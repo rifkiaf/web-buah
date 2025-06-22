@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
@@ -12,9 +12,19 @@ export default function Cart() {
     clearCart,
     loading,
     displayName,
+    shippingOptions,
+    shippingOption,
+    setShippingOption,
   } = useCart();
 
   const { currentUser } = useAuth();
+
+  const handleShippingChange = (event) => {
+    setShippingOption(event.target.value);
+  };
+
+  const shippingCost = shippingOptions[shippingOption].cost;
+  const grandTotal = getCartTotal() + shippingCost;
 
   if (loading) {
     return (
@@ -33,12 +43,16 @@ export default function Cart() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userId: currentUser.uid,
-            email: currentUser.email, 
+            email: currentUser.email,
             address: currentUser.address,
             phone: currentUser.phone,
             cartItems,
             total: getCartTotal(),
-            displayName, // Include displayName in the request
+            displayName,
+            shipping: {
+              option: shippingOptions[shippingOption].name,
+              cost: shippingCost,
+            },
           }),
         }
       );
@@ -51,7 +65,7 @@ export default function Cart() {
           console.log("Success:", result);
 
           // Contoh panggil API update status pembayaran
-          await fetch("https://backend-buah.vercel.app/api/update-transaction-status", {
+          await fetch("http://backend-buah.vercel.app/api/update-transaction-status", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -164,17 +178,47 @@ export default function Cart() {
                     Rp {getCartTotal().toLocaleString()}
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Pengiriman</span>
-                  <span className="text-gray-900">Gratis</span>
+
+                <div>
+                  <h3 className="text-md font-semibold text-gray-800 mb-2 pt-4 border-t">
+                    Opsi Pengiriman
+                  </h3>
+                  <div className="space-y-2">
+                    {Object.entries(shippingOptions).map(
+                      ([key, { name, cost }]) => (
+                        <label
+                          key={key}
+                          className="flex items-center cursor-pointer p-2 rounded-md hover:bg-gray-100"
+                        >
+                          <input
+                            type="radio"
+                            name="shippingOption"
+                            value={key}
+                            checked={shippingOption === key}
+                            onChange={handleShippingChange}
+                            className="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500"
+                          />
+                          <span className="ml-3 text-sm text-gray-600">
+                            {name}
+                          </span>
+                          <span className="ml-auto text-sm font-medium text-gray-900">
+                            {cost === 0
+                              ? "Gratis"
+                              : `Rp ${cost.toLocaleString()}`}
+                          </span>
+                        </label>
+                      )
+                    )}
+                  </div>
                 </div>
+
                 <div className="border-t pt-4">
                   <div className="flex justify-between">
                     <span className="text-lg font-semibold text-gray-900">
                       Total
                     </span>
                     <span className="text-lg font-semibold text-gray-900">
-                      Rp {getCartTotal().toLocaleString()}
+                      Rp {grandTotal.toLocaleString()}
                     </span>
                   </div>
                 </div>
