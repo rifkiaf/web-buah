@@ -60,15 +60,15 @@ export default function Register() {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            Create your account
+            Buat akun Anda
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Already have an account?{" "}
+            Sudah punya akun?{" "}
             <Link
               to="/login"
               className="font-medium text-green-600 hover:text-green-500"
             >
-              Sign in here
+              Masuk di sini
             </Link>
           </p>
         </div>
@@ -86,7 +86,7 @@ export default function Register() {
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
               >
-                Full Name
+                Nama Lengkap
               </label>
               <div className="mt-1">
                 <input
@@ -107,7 +107,7 @@ export default function Register() {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
-                Email address
+                Email
               </label>
               <div className="mt-1">
                 <input
@@ -149,7 +149,7 @@ export default function Register() {
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium text-gray-700"
               >
-                Confirm Password
+                Konfirmasi Password
               </label>
               <div className="mt-1">
                 <input
@@ -166,7 +166,7 @@ export default function Register() {
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Nomor Telepon</label>
               <div className="mt-1">
                 <input
                   id="phone"
@@ -180,7 +180,7 @@ export default function Register() {
               </div>
             </div>
             <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700">Alamat</label>
               <div className="mt-1">
                 <input
                   id="address"
@@ -194,7 +194,7 @@ export default function Register() {
               </div>
             </div>
 
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <input
                 id="isAdmin"
                 name="isAdmin"
@@ -209,7 +209,7 @@ export default function Register() {
               >
                 Register as Admin
               </label>
-            </div>
+            </div> */}
 
             <div>
               <button
@@ -217,7 +217,7 @@ export default function Register() {
                 disabled={loading}
                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? "Creating account..." : "Create account"}
+                {loading ? "Membuat akun..." : "Buat Akun"}
               </button>
             </div>
           </form>

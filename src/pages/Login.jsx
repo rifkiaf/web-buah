@@ -48,15 +48,15 @@ export default function Login() {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            Welcome Back!
+            Selamat Datang !
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Don't have an account?{" "}
+            Belum punya akun?{" "}
             <Link
               to="/register"
               className="font-medium text-green-600 hover:text-green-500"
             >
-              Sign up here
+              Daftar di sini
             </Link>
           </p>
         </div>
@@ -74,7 +74,7 @@ export default function Login() {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
-                Email address
+                Email
               </label>
               <div className="mt-1">
                 <input
@@ -111,7 +111,7 @@ export default function Login() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -135,7 +135,7 @@ export default function Login() {
                   Forgot your password?
                 </a>
               </div>
-            </div>
+            </div> */}
 
             <div>
               <button
@@ -143,7 +143,7 @@ export default function Login() {
                 disabled={loading}
                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? "Signing in..." : "Sign in"}
+                {loading ? "Masuk..." : "Masuk"}
               </button>
             </div>
           </form>

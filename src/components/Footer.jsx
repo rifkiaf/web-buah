@@ -92,7 +92,7 @@ export default function Footer() {
               <span className="text-xl">🍏</span>
               <span>&copy; 2025 Sari Buah. All rights reserved.</span>
             </p>
-            <div className="flex space-x-6 order-1 md:order-2">
+            {/* <div className="flex space-x-6 order-1 md:order-2">
               <a href="#" className="text-green-200 hover:text-white transition-colors flex items-center space-x-1">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"/></svg>
                 <span>Privacy Policy</span>
@@ -105,7 +105,7 @@ export default function Footer() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.4 15a1.65 1.65 0 01.33 1.82A8 8 0 114 8.6a1.65 1.65 0 011.82.33"/></svg>
                 <span>Cookie Policy</span>
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
