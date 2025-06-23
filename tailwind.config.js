@@ -31,7 +31,7 @@ export default {
         dark: '#222', // Untuk teks gelap
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
       },
     },
   },
